@@ -1,0 +1,25 @@
+name: Implementación Automática
+
+on:
+  push:
+    branches:
+      - prueba
+
+jobs:
+  implementacion:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Verificar cambios en la rama de prueba
+      uses: actions/checkout@v2
+      with:
+        ref: prueba
+
+    - name: Implementar en producción
+      if: success() 
+      run: 
+        git checkout produccion
+        git merge --no-ff prueba -m "Implementar cambios desde la rama de prueba
+
+        git push origin master
+        
